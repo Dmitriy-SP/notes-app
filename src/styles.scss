@@ -1,0 +1,25 @@
+@import './node_modules/bootstrap/scss/bootstrap';
+
+.custom-list-group{
+  max-height: 85%;
+  overflow:auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.button-size-fit{
+  width: fit-content;
+}
+
+.textAreaSize{
+  min-height: 300px;
+}
+
+.note-preview {
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.bodyAux{
+  height: 1px;
+}

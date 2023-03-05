@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notes App</title>
+</head>
+<body class="d-flex flex-column min-vh-100 bodyAux">
+  <main class="container-fluid bg-dark h-100">
+    <div class="flex-grow-1 h-100">
+        <section class="container-fluid container-xxl p-3 h-100">
+            <div class="row h-100">
+              <div class="h-auto card col-md-10 col-lg-4 col-xl-4 border border-secondary border-2 order-1 mx-auto posts custom-list-group">
+                <button type="button" class="btn btn-sm btn-success button-size-fit mt-2">Add a new task</button>
+                <ul class="list-group border-0 rounded-0 mt-1" id="notes">
+                </ul>
+              </div>
+              <div class="h-auto card col-md-10 col-lg-8 col-xl-8 mx-auto border border-secondary border-2 order-0 order-lg-1 notes">
+                <div class="card border-0 h-100 textAreaSize">
+                  <textarea id="editor"></textarea>
+                </div>
+              </div>
+            </div>
+        </section>
+    </div>
+  </main>
+  <footer class="footer py-3 bg-white">
+    <div class="container-xl">
+        <div class="text-center foooter">
+            created by 
+            <a href="https://github.com/Dmitriy-SP" target="_blank">Dmitriy L.</a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
