@@ -14,6 +14,9 @@ import 'tinymce/plugins/lists';
 import 'tinymce/plugins/table';
 import render from './render.js';
 
+const greetingsText = '<p style="text-align: left;"><span style="font-size: 18pt;"><strong><span style="font-family: \'times new roman\', times, serif;">Hello!&nbsp;</span></strong></span><br><span style="font-family: \'times new roman\', times, serif; font-size: 18pt;">Notes app is an service for creating, editing and storing notes.</span><br><span style="font-family: \'times new roman\', times, serif; font-size: 18pt;">To create a new note, click "<strong>Add a new note</strong>".</span><br><span style="font-family: \'times new roman\', times, serif; font-size: 18pt;">Use the menu above to edit the note.</span><br><span style="font-family: \'times new roman\', times, serif; font-size: 18pt;">To save changes click "<strong>Save note</strong>".</span><br><span style="font-family: \'times new roman\', times, serif; font-size: 18pt;">To delete a note, click on the note preview cross.</span><br><span style="font-family: \'times new roman\', times, serif; font-size: 18pt;">To switch to another note, click on it in the list of notes.</span><br><span style="font-family: \'times new roman\', times, serif; font-size: 18pt;">When you switch to another note or create a new one, the latest changes in the current note are saved.</span></p>';
+const maxSignOfNotes = 4;
+
 const dbGetItem = (key) => localforage.getItem(key)
   .catch((error) => {
     throw new Error(error);
@@ -57,7 +60,7 @@ const addId = async () => {
 
 const addDbId = (id) => {
   let stringId = id.toString();
-  while (stringId.length < 4) {
+  while (stringId.length < maxSignOfNotes) {
     stringId = `0${stringId}`;
   }
   return stringId;
@@ -71,7 +74,7 @@ const initialize = async () => {
   }
   const id = await addId();
   const welcomeNote = {
-    content: 'someInitText',
+    content: greetingsText,
     id,
   };
   await dbSetItem(addDbId(id), welcomeNote);
@@ -82,7 +85,8 @@ export default async () => {
   const initialUiState = await initialize();
 
   const elements = {
-    addNote: document.querySelector('button.button-size-fit'),
+    addNote: document.querySelector('button#addNote'),
+    saveNote: document.querySelector('button#saveNote'),
     noteField: document.querySelector('div.textAreaSize'),
     notes: document.querySelector('#notes'),
     noteFields: document.querySelector('div.notes'),
@@ -90,7 +94,7 @@ export default async () => {
 
   const watchedState = onChange(initialUiState, async () => {
     const notes = await dbGetNotes();
-    render(watchedState, notes, elements);
+    render(watchedState, notes, elements, tinymce);
   });
 
   tinymce.init({
@@ -98,11 +102,11 @@ export default async () => {
     height: '100%',
     resize: false,
     plugins: 'advlist code emoticons link lists table',
-    toolbar: 'fontfamily fontsize styles | bold italic | bullist numlist | link emoticons',
+    toolbar: 'fontfamily fontsize styles | bold italic | bullist numlist | link emoticons | language',
     skin: false,
     content_css: false,
     setup: (ed) => {
-      ed.on('change', async () => {
+      ed.on('focusout', async () => {
         const content = ed.getContent();
         await dbSetItem(
           addDbId(watchedState.activeNoteId),
@@ -118,7 +122,7 @@ export default async () => {
     });
 
   const notes = await dbGetNotes();
-  render(watchedState, notes, elements);
+  render(watchedState, notes, elements, tinymce);
 
   elements.addNote.addEventListener('click', async (e) => {
     e.preventDefault();
@@ -131,6 +135,16 @@ export default async () => {
     watchedState.activeNoteId = id;
     watchedState.status = 'addedNote';
     tinymce.execCommand('mceFocus', false, 'editor');
+  });
+
+  elements.saveNote.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const content = tinymce.activeEditor.getContent();
+    await dbSetItem(
+      addDbId(watchedState.activeNoteId),
+      { content, id: watchedState.activeNoteId },
+    );
+    watchedState.status = 'changedNote';
   });
 
   elements.notes.addEventListener('click', async (e) => {

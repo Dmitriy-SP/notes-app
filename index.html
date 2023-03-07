@@ -6,26 +6,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Notes App</title>
 </head>
-<body class="d-flex flex-column min-vh-100 bodyAux">
-  <main class="container-fluid bg-dark h-100">
+<body class="d-flex flex-column min-vh-100 body-min-size">
+  <main class="container-fluid bg-dark h-90">
     <div class="flex-grow-1 h-100">
         <section class="container-fluid container-xxl p-3 h-100">
-            <div class="row h-100">
-              <div class="h-auto card col-md-10 col-lg-4 col-xl-4 border border-secondary border-2 order-1 mx-auto posts custom-list-group">
-                <button type="button" class="btn btn-sm btn-success button-size-fit mt-2">Add a new task</button>
+            <div class="row h-100 g-1">
+              <div class="h-auto card col-md-10 col-lg-4 col-xl-4 order-2 mx-auto order-lg-1 posts custom-list-group border border-secondary border-2">
+                <button type="button" class="btn btn-sm btn-success button-size-fit mt-2" id="addNote">Add a new note</button>
                 <ul class="list-group border-0 rounded-0 mt-1" id="notes">
                 </ul>
               </div>
-              <div class="h-auto card col-md-10 col-lg-8 col-xl-8 mx-auto border border-secondary border-2 order-0 order-lg-1 notes">
-                <div class="card border-0 h-100 textAreaSize">
+              <div class="h-auto card col-md-10 col-lg-8 col-xl-8 mx-auto order-0 order-lg-2 notes border border-secondary border-2">
+                <div class="card border-0 h-100 text-area-min-size">
+                  <div class="mt-2"></div>
                   <textarea id="editor"></textarea>
+                  <button type="button" class="btn btn-sm btn-success button-size-fit mt-2" id="saveNote">Save note</button>
+                  <div class="mt-2"></div>
                 </div>
               </div>
             </div>
         </section>
     </div>
   </main>
-  <footer class="footer py-3 bg-white">
+  <footer class="footer py-3 bg-white h-10">
     <div class="container-xl">
         <div class="text-center foooter">
             created by 

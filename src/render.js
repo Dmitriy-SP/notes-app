@@ -1,5 +1,3 @@
-import tinymce from 'tinymce';
-
 const buildNote = (note, activeNoteId) => {
   const noteLi = document.createElement('li');
   noteLi.className = 'list-group-item d-flex justify-content-between align-items-start border mb-1';
@@ -33,45 +31,45 @@ const renderNotes = (activeNoteId, notes, elements) => {
   elements.notes.innerHTML = '';
 };
 
-const renderNote = (activeNoteId, notes) => {
+const renderNote = (activeNoteId, notes, tinymce) => {
   if (activeNoteId !== null) {
     tinymce.activeEditor.getBody().setAttribute('contenteditable', true);
-    const currentNote = notes.filter((note) => note.id === activeNoteId)[0];
+    const currentNote = notes.find((note) => note.id === activeNoteId);
     tinymce.activeEditor.setContent(currentNote.content ?? '');
     return;
   }
   tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
-  tinymce.activeEditor.setContent('<p><span style="font-size: 24pt;">Add a new note first</span></p>');
+  tinymce.activeEditor.setContent('<p><span style="font-size: 18pt;"><strong>Add a new note first</strong></span></p>');
 };
 
-const blocked = (elements) => {
+const blocked = (elements, tinymce) => {
   tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
   elements.notes.childNodes.forEach((note) => note.setAttribute('disabled', true));
 };
 
-const unlocked = (elements) => {
+const unlocked = (elements, tinymce) => {
   tinymce.activeEditor.getBody().setAttribute('contenteditable', true);
   elements.notes.childNodes.forEach((note) => note.removeAttribute('disabled'));
 };
 
-export default (state, notes, elements) => {
+export default (state, notes, elements, tinymce) => {
   switch (state.status) {
     case 'init':
     case 'addedNote':
     case 'deleteCurrentNote':
     case 'focusOnNewNote':
     case 'changedNote':
-      renderNote(state.activeNoteId, notes);
+      renderNote(state.activeNoteId, notes, tinymce);
       renderNotes(state.activeNoteId, notes, elements);
       break;
     case 'deleteNote':
       renderNotes(state.activeNoteId, notes, elements);
       break;
     case 'deleting':
-      blocked(elements);
+      blocked(elements, tinymce);
       break;
     case 'deleted':
-      unlocked(elements);
+      unlocked(elements, tinymce);
       break;
     default:
   }
