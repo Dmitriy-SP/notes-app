@@ -7,7 +7,7 @@ Notes app is a service for creating, editing and storing notes in your browser.<
 <a href="https://notes-app-five-phi.vercel.app/">You can try web-version.</a>
 
 - [Description](#Description)
-- [Versions](#Examples)
+- [Versions](#Versions)
 - [Installation](#Installation)
 - [Usage](#Usage)
 
@@ -19,7 +19,7 @@ This service allows you to add a lot of notes (maximum 999), edit them with <a h
 
 ### Desctop version
 
-<img src="https://drive.google.com/uc?export=view&id=1BzO2E4hoaHhpbpEOhjQY6sk90cXdRElV" width="80%">
+<img src="https://drive.google.com/uc?export=view&id=1BzO2E4hoaHhpbpEOhjQY6sk90cXdRElV" width="100%">
 
 ### Mobile version
 

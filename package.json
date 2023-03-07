@@ -1,7 +1,7 @@
 {
-  "name": "my-webpack-project",
+  "name": "notes-app",
   "version": "1.0.0",
-  "description": "My webpack project",
+  "description": "Notes app is a service for creating, editing and storing notes in your browser",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
